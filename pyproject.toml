@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "bdi-aircraft-s4"
+version = "0.1.0"
+description = "Aircraft API with S3 Storage"
+authors = ["Your Name"]
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.115.12"
+uvicorn = "^0.34.2"
+boto3 = "^1.38.7"
+requests = "^2.32.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.1"
+ruff = "^0.11.8"
+httpx = "^0.28.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["E", "F", "B", "I"]
+ignore = []
+line-length = 100
