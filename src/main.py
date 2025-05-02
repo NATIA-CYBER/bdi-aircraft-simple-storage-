@@ -5,8 +5,8 @@ from fastapi.responses import RedirectResponse
 from src.s4.routes import router as s4_router
 
 app = FastAPI(
-    title="Aircraft API with S3",
-    description="S4 Assignment - Aircraft API with AWS S3 Integration",
+    title="Simple Storage Service API",
+    description="S4 Assignment - Simple Storage Service with AWS S3",
     version="0.1.0",
 )
 

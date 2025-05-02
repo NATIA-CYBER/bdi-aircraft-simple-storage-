@@ -1,6 +1,6 @@
-# S4 - Aircraft API with S3 Storage
+# S4 - Simple Storage Service
 
-Implementation of `/api/s4/aircraft/download` and `/api/s4/aircraft/prepare` endpoints with AWS S3 integration.
+Implementation of a Simple Storage Service using FastAPI and AWS S3. This service allows users to upload and download files using AWS S3 as the storage backend.
 
 ## Setup
 
@@ -30,8 +30,17 @@ The API will be available at http://localhost:8000
 
 ## API Endpoints
 
-- `POST /api/s4/aircraft/download`: Download aircraft data to S3
-- `POST /api/s4/aircraft/prepare`: Prepare downloaded data
+### Upload File
+- **Endpoint**: `POST /api/s4/storage/upload`
+- **Description**: Upload a file to S3
+- **Request**: Multipart form data with file
+- **Response**: JSON with upload status and filename
+
+### Download File
+- **Endpoint**: `GET /api/s4/storage/download/{file_key}`
+- **Description**: Download a file from S3
+- **Parameters**: `file_key` - Name of the file to download
+- **Response**: File content as attachment
 
 ## Testing
 
@@ -40,9 +49,14 @@ Run tests:
 poetry run pytest
 ```
 
-## Deployment
+Run linting:
+```bash
+poetry run ruff check .
+```
 
-1. Launch EC2 instance
-2. Configure security groups for HTTP access
-3. Deploy API
-4. Access via http://[EC2-IP]/docs
+## Screenshots
+
+Screenshots of the API in action can be found in the `screenshots` folder:
+- `swagger-ui.png`: API documentation
+- `download-endpoint.png`: Successful file download
+- `prepare-endpoint.png`: Successful file upload
