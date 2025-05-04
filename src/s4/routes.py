@@ -28,10 +28,16 @@ def download_data(file_limit: int = Query(default=100)) -> str:
                 detail="Failed to ensure S3 bucket exists"
             ) from None
         
-        # Download data from API
-        response = requests.get(base_url)
-        response.raise_for_status()
-        data = response.json()
+        try:
+            # Download data from API
+            response = requests.get(base_url)
+            response.raise_for_status()
+            data = response.json()
+        except (requests.RequestException, Exception) as e:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to fetch data from OpenSky API"
+            ) from e
         
         # Save raw data to S3
         file_key = f"raw/aircraft_data_{file_limit}.json"
@@ -42,13 +48,8 @@ def download_data(file_limit: int = Query(default=100)) -> str:
             ) from None
         
         return "OK"
-    except requests.RequestException as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to fetch data from API: {str(e)}"
-        ) from e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) from e
+    except HTTPException:
+        raise
 
 @router.post("/aircraft/prepare")
 def prepare_data() -> str:
@@ -93,6 +94,11 @@ def prepare_data() -> str:
             ) from None
         
         return "OK"
+    except json.JSONDecodeError:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to parse raw data"
+        ) from None
     except HTTPException:
         raise
     except Exception as e:
