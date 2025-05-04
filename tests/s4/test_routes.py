@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
-import requests
 from fastapi.testclient import TestClient
 
 from src.main import app
