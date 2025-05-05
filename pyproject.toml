@@ -11,6 +11,7 @@ fastapi = "^0.115.12"
 uvicorn = "^0.34.2"
 boto3 = "^1.38.7"
 requests = "^2.32.3"
+ruff = "^0.11.8"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
@@ -23,6 +24,19 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-select = ["E", "F", "B", "I"]
-ignore = []
+# Enable flake8-bugbear ('B'), pycodestyle ('E'), pyflakes ('F'), and isort ('I')
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "B",  # flake8-bugbear
+    "I",  # isort
+]
+
+# Never enforce line length
 line-length = 100
+
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Assume Python 3.9
+target-version = "py39"
